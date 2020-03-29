@@ -6,7 +6,7 @@ module.exports = {
 
         const [count] = await connection('incidents').count();
 
-        console.log(count)
+        console.log("=>", count)
 
         const incidents = await connection('incidents')
             .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
@@ -17,10 +17,11 @@ module.exports = {
                 'ongs.name', 
                 'ongs.email', 
                 'ongs.city', 
-                'ongs.uf'
+                'ongs.uf',
+                'ongs.whatsapp'
             ]);
         
-        response.header('X-Total-Count', count['count(*)']);
+        response.header('X-Total-Count', count['count(*)'] - 1 );
 
         return response.json(incidents)
     },
